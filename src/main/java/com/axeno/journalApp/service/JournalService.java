@@ -7,6 +7,7 @@ import com.axeno.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,7 @@ public class JournalService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public boolean saveJournalEntry(JournalEntity journalEntry,String userName) throws Exception {
         UserEntity user = userRepository.findByUserName(userName).orElse(null);
         if (user == null) {
@@ -39,6 +41,7 @@ public class JournalService {
         return journalRepository.findById(id);
     }
 
+    @Transactional
     public boolean deleteJournalEntry(ObjectId id,String userName) {
         //check if user exists or not
         UserEntity user = userRepository.findByUserName(userName).orElse(null);
